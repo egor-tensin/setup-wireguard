@@ -1,6 +1,8 @@
 Set up WireGuard
 ================
 
+[![Test](https://github.com/egor-tensin/setup-wireguard/actions/workflows/test.yml/badge.svg)](https://github.com/egor-tensin/setup-wireguard/actions/workflows/test.yml)
+
 This GitHub action sets up a WireGuard connection in your workflow run.
 
 1. Installs WireGuard if it's missing.
