@@ -11,15 +11,15 @@ inputs:
   ips:
     description: Comma-separated list of IP addresses
     required: true
+  allowed_ips:
+    description: Comma-separated list of netmasks
+    required: true
   private_key:
     description: Private key
     required: true
   preshared_key:
     description: Preshared key
     required: false
-  allowed_ips:
-    description: Comma-separated list of netmasks
-    required: true
 
 runs:
   using: composite
@@ -30,9 +30,9 @@ runs:
         readonly endpoint='${{ inputs.endpoint }}'
         readonly endpoint_public_key='${{ inputs.endpoint_public_key }}'
         readonly ips='${{ inputs.ips }}'
+        readonly allowed_ips='${{ inputs.allowed_ips }}'
         readonly private_key='${{ inputs.private_key }}'
         readonly preshared_key='${{ inputs.preshared_key }}'
-        readonly allowed_ips='${{ inputs.allowed_ips }}'
 
         readonly minport=51000
         readonly maxport=51999
