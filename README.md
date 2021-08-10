@@ -16,9 +16,9 @@ Use it your workflow like this:
         endpoint: 46.46.46.46:51820
         endpoint_public_key: 9IHlvJqgkVWMq57a0A56XI5IjhnL5gaRhI1Pszk7S24=
         ips: 192.168.143.254/24,fd8c:bc10:5021::192.168.143.254/48
+        allowed_ips: 192.168.143.0/24,fd8c:bc10:5021::/48
         private_key: GLEiXhRwFuhw8aPy+HQfSMwwoLU0Sw8jE8MOxZ8GV3w=
         preshared_key: PWAfvVWCjiNV0Uh2DhmXhdRaT326qosSOcaDB3j9dwI=
-        allowed_ips: 192.168.143.0/24,fd8c:bc10:5021::/48
 
 Of couse it's highly advised to store all sensitive data in your repository's
 secrets.
