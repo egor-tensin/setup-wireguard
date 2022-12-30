@@ -20,6 +20,9 @@ inputs:
   preshared_key:
     description: Preshared key
     required: false
+  keepalive:
+    description: Useful for NAT traversal
+    required: false
 
 runs:
   using: composite
@@ -33,6 +36,7 @@ runs:
         readonly allowed_ips='${{ inputs.allowed_ips }}'
         readonly private_key='${{ inputs.private_key }}'
         readonly preshared_key='${{ inputs.preshared_key }}'
+        readonly keepalive='${{ inputs.keepalive }}'
 
         readonly minport=51000
         readonly maxport=51999
@@ -67,6 +71,11 @@ runs:
             if [ -n "$preshared_key" ]; then
                 netdev_contents="$netdev_contents
             PresharedKey=$preshared_key"
+            fi
+
+            if [ -n "$keepalive" ]; then
+                netdev_contents="$netdev_contents
+            PersistentKeepalive=$keepalive"
             fi
 
             local network_contents
@@ -132,18 +141,21 @@ runs:
                 listen-port "$port" \
                 private-key "$private_key_path"
 
-            if [ -z "$preshared_key" ]; then
-                sudo wg set "$ifname" \
-                    peer "$endpoint_public_key" \
-                    endpoint "$endpoint" \
-                    allowed-ips "$allowed_ips"
-            else
-                sudo wg set "$ifname" \
-                    peer "$endpoint_public_key" \
-                    preshared-key "$preshared_key_path" \
-                    endpoint "$endpoint" \
-                    allowed-ips "$allowed_ips"
+            additionnal_wg_args=()
+
+            if [ -n "$preshared_key" ]; then
+                additionnal_wg_args+=("preshared-key \"${preshared_key_path}\"")
             fi
+
+            if [ -n "$keepalive" ]; then
+                additionnal_wg_args+=("persistent-keepalive ${keepalive}")
+            fi
+
+            sudo wg set "$ifname" \
+                peer "$endpoint_public_key" \
+                endpoint "$endpoint" \
+                allowed-ips "$allowed_ips" \
+                ${additionnal_wg_args[@]}
 
             sudo ip link set "$ifname" up
         }
