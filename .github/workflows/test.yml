@@ -30,5 +30,6 @@ jobs:
           allowed_ips: '${{ secrets.ALLOWED_IPS }}'
           private_key: '${{ secrets.PRIVATE }}'
           preshared_key: '${{ secrets.PRESHARED }}'
+          keepalive: 25
       - name: Check endpoint
         run: ping -W 10 -c 5 -- '${{ secrets.ENDPOINT_PRIVATE_IP }}'
