@@ -45,6 +45,7 @@ API
 | allowed_ips         | 192.168.143.0/24,fd8c:bc10:5021::/48                  | Comma-separated list of netmasks.
 | private_key         | GLEiXhRwFuhw8aPy+HQfSMwwoLU0Sw8jE8MOxZ8GV3w=          | Private key of the VM.
 | preshared_key       | PWAfvVWCjiNV0Uh2DhmXhdRaT326qosSOcaDB3j9dwI=          | Preshared key assigned to the VM.
+| keepalive           | 25                                                    | Useful for NAT traversal.
 
 License
 -------
