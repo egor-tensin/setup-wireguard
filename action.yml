@@ -144,21 +144,21 @@ runs:
             additionnal_wg_args=()
 
             if [ -n "$preshared_key" ]; then
-                additionnal_wg_args+=("preshared-key \"${preshared_key_path}\"")
+                additionnal_wg_args+=(preshared-key "${preshared_key_path}")
             fi
 
             if [ -n "$keepalive" ]; then
-                additionnal_wg_args+=("persistent-keepalive ${keepalive}")
+                additionnal_wg_args+=(persistent-keepalive "${keepalive}")
             fi
 
             sudo wg set "$ifname" \
                 peer "$endpoint_public_key" \
                 endpoint "$endpoint" \
                 allowed-ips "$allowed_ips" \
-                ${additionnal_wg_args[@]}
+                ${additionnal_wg_args[@]+"${additionnal_wg_args[@]}"}
 
             sudo ip link set "$ifname" up
-            
+
             # Add routes for allowed_ips
             for i in ${allowed_ips//,/ }; do sudo ip route replace "$i" dev "$ifname"; done
         }
