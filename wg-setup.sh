@@ -69,7 +69,7 @@ via_wg_tools() {
         peer "$endpoint_public_key" \
         endpoint "$endpoint" \
         allowed-ips "$allowed_ips" \
-        "${additional_wg_args[@]+"${additional_wg_args[@]}"}"
+        "${additional_wg_args[@]}"
 
     sudo ip link set "$ifname" up
 
