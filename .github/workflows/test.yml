@@ -23,15 +23,18 @@ jobs:
         uses: actions/checkout@v2
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
+      - name: Set up WireGuard Server
+        run: ./tests/wg-server.sh CREATE
+      # Magic following values comes from the ./tests/wg-server.sh script
       - name: Set up WireGuard
         uses: ./
         with:
-          endpoint: '${{ secrets.ENDPOINT }}'
-          endpoint_public_key: '${{ secrets.ENDPOINT_PUBLIC }}'
-          ips: '${{ secrets.IPS }}'
-          allowed_ips: '${{ secrets.ALLOWED_IPS }}'
-          private_key: '${{ secrets.PRIVATE }}'
-          preshared_key: '${{ secrets.PRESHARED }}'
+          endpoint: '10.1.1.1:51820'
+          endpoint_public_key: 'gHF6vSiGLl/qbZQDSb6kC65RxQq5bEIGDJIuyWxxgy0='
+          ips: '10.10.1.2'
+          allowed_ips: '10.10.1.0/24,10.2.1.0/24'
+          private_key: 'IKgP085Cw91kP73B/76dRUxjJ6Rrz8azfavtj9SDzHA='
+          preshared_key: 'G0gmiQgbUDUR92M2WwsHgt3LCIjCzhsS16xwHBbN2MM='
           keepalive: 25
       - name: Check endpoint
-        run: ping -W 10 -c 5 -- '${{ secrets.ENDPOINT_PRIVATE_IP }}'
+        run: ping -W 10 -c 5 -- '10.2.1.2'
