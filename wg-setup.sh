@@ -18,8 +18,16 @@ port="$( shuf "--input-range=$minport-$maxport" --head-count=1 )"
 readonly port
 
 install_wg_tools() {
-    sudo apt-get update
+  sudo apt-get update || sudo yum update -y
+  if command -v apt-get >/dev/null 2>&1; then
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools
+  elif command -v yum >/dev/null 2>&1; then
+    sudo amazon-linux-extras install -y epel
+    sudo yum install -y wireguard-tools
+  else
+    echo "Unsupported package manager"
+    exit 1
+  fi
 }
 
 readonly private_key_path=/tmp/private.key
