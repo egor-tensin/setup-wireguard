@@ -23,6 +23,9 @@ inputs:
   keepalive:
     description: Useful for NAT traversal
     required: false
+  dns:
+    description: Comma-separated list of DNS addresses
+    required: false
 
 runs:
   using: composite
@@ -37,6 +40,7 @@ runs:
         readonly private_key='${{ inputs.private_key }}'
         readonly preshared_key='${{ inputs.preshared_key }}'
         readonly keepalive='${{ inputs.keepalive }}'
+        readonly dns='${{ inputs.dns }}'
 
         readonly minport=51000
         readonly maxport=51999
@@ -149,6 +153,13 @@ runs:
 
             if [ -n "$keepalive" ]; then
                 additional_wg_args+=(persistent-keepalive "${keepalive}")
+            fi
+
+            # Add nameservers
+            if [[ -n ${dns} ]]; then
+              resolv_file="/etc/resolv.conf"
+              sudo tee ${resolv_file} <<< $(sed '/^nameserver/d' ${resolv_file})
+              for d in ${dns//,/ }; do echo "nameserver ${d}" | sudo tee -a ${resolv_file}; done
             fi
 
             sudo wg set "$ifname" \
