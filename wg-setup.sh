@@ -20,7 +20,7 @@ readonly port
 install_wg_tools() {
   sudo apt-get update || sudo yum update -y
   if command -v apt-get >/dev/null 2>&1; then
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools iproute2
   elif command -v yum >/dev/null 2>&1; then
     sudo amazon-linux-extras install -y epel
     sudo yum install -y wireguard-tools
