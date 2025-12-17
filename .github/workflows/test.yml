@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: 'Test: ${{ matrix.os }}'
+    name: Test
     defaults:
       run:
         shell: bash
