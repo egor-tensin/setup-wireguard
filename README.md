@@ -46,6 +46,7 @@ API
 | private_key         | GLEiXhRwFuhw8aPy+HQfSMwwoLU0Sw8jE8MOxZ8GV3w=          | Private key of the VM.
 | preshared_key       | PWAfvVWCjiNV0Uh2DhmXhdRaT326qosSOcaDB3j9dwI=          | Preshared key assigned to the VM.
 | keepalive           | 25                                                    | Useful for NAT traversal.
+| dns                 | 1.1.1.1,1.0.0.1                                       | Comma-separated list of DNS addresses.
 
 License
 -------
