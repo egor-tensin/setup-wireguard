@@ -37,15 +37,15 @@ It could then become something like:
 API
 ---
 
-| Input               | Example                                               | Description
-| ------------------- | ----------------------------------------------------- | -----------
-| endpoint            | 46.46.46.46:51820                                     | Endpoint to connect to in the HOST:PORT format.
-| endpoint_public_key | 9IHlvJqgkVWMq57a0A56XI5IjhnL5gaRhI1Pszk7S24=          | Endpoint's public key.
-| ips                 | 192.168.143.254/24,fd8c:bc10:5021::192.168.143.254/48 | Comma-separated list of IP addresses to assign to the VM.
-| allowed_ips         | 192.168.143.0/24,fd8c:bc10:5021::/48                  | Comma-separated list of netmasks.
-| private_key         | GLEiXhRwFuhw8aPy+HQfSMwwoLU0Sw8jE8MOxZ8GV3w=          | Private key of the VM.
-| preshared_key       | PWAfvVWCjiNV0Uh2DhmXhdRaT326qosSOcaDB3j9dwI=          | Preshared key assigned to the VM.
-| keepalive           | 25                                                    | Useful for NAT traversal.
+| Input               | Example                                                 | Description
+| ------------------- | ------------------------------------------------------- | -----------
+| endpoint            | 46.46.46.46:51820                                       | Endpoint to connect to in the HOST:PORT format.
+| endpoint_public_key | `9IHlvJqgkVWMq57a0A56XI5IjhnL5gaRhI1Pszk7S24=`          | Endpoint's public key.
+| ips                 | 192.168.143.254/24,fd8c:bc10:5021::192.168.143.254/48   | Comma-separated list of IP addresses to assign to the VM.
+| allowed_ips         | 192.168.143.0/24,fd8c:bc10:5021::/48                    | Comma-separated list of netmasks.
+| private_key         | `GLEiXhRwFuhw8aPy+HQfSMwwoLU0Sw8jE8MOxZ8GV3w=`          | Private key of the VM.
+| preshared_key       | `PWAfvVWCjiNV0Uh2DhmXhdRaT326qosSOcaDB3j9dwI=`          | Preshared key assigned to the VM.
+| keepalive           | 25                                                      | Useful for NAT traversal.
 
 License
 -------
