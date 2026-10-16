@@ -31,3 +31,17 @@ jobs:
           keepalive: 25
       - name: Check endpoint
         run: ping -W 10 -c 5 -- '${{ secrets.ENDPOINT_PRIVATE_IP }}'
+
+  release:
+    if: github.ref_type == 'tag'
+    name: Release
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Release
+        uses: softprops/action-gh-release@v3
