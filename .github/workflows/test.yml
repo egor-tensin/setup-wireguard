@@ -9,28 +9,32 @@ on:
     - cron: '30 00 * * 5'
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   test:
     runs-on: ubuntu-latest
     name: Test
-    defaults:
-      run:
-        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Set up WireGuard
-        uses: ./
         with:
-          endpoint: '${{ secrets.ENDPOINT }}'
-          endpoint_public_key: '${{ secrets.ENDPOINT_PUBLIC }}'
-          ips: '${{ secrets.IPS }}'
-          allowed_ips: '${{ secrets.ALLOWED_IPS }}'
-          private_key: '${{ secrets.PRIVATE }}'
-          preshared_key: '${{ secrets.PRESHARED }}'
+          persist-credentials: false
+      - name: Set up WireGuard
+        uses: $/
+        with:
+          endpoint: ${{ secrets.ENDPOINT }}
+          endpoint_public_key: ${{ secrets.ENDPOINT_PUBLIC }}
+          ips: ${{ secrets.IPS }}
+          allowed_ips: ${{ secrets.ALLOWED_IPS }}
+          private_key: ${{ secrets.PRIVATE }}
+          preshared_key: ${{ secrets.PRESHARED }}
           keepalive: 25
       - name: Check endpoint
-        run: ping -W 10 -c 5 -- '${{ secrets.ENDPOINT_PRIVATE_IP }}'
+        env:
+          PRIVATE_IP: ${{ secrets.ENDPOINT_PRIVATE_IP }}
+        run: |
+          ping -W 10 -c 5 -- "$PRIVATE_IP"
 
   release:
     if: github.ref_type == 'tag'
@@ -43,5 +47,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Release
         uses: softprops/action-gh-release@v3

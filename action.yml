@@ -27,16 +27,24 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: |
+    - env:
+        ARG_ENDPOINT: ${{ inputs.endpoint }}
+        ARG_ENDPOINT_PUBLIC_KEY: ${{ inputs.endpoint_public_key }}
+        ARG_IPS: ${{ inputs.ips }}
+        ARG_ALLOWED_IPS: ${{ inputs.allowed_ips }}
+        ARG_PRIVATE_KEY: ${{ inputs.private_key }}
+        ARG_PRESHARED_KEY: ${{ inputs.preshared_key }}
+        ARG_KEEPALIVE: ${{ inputs.keepalive }}
+      run: |
         set -o errexit -o pipefail -o nounset
 
-        readonly endpoint='${{ inputs.endpoint }}'
-        readonly endpoint_public_key='${{ inputs.endpoint_public_key }}'
-        readonly ips='${{ inputs.ips }}'
-        readonly allowed_ips='${{ inputs.allowed_ips }}'
-        readonly private_key='${{ inputs.private_key }}'
-        readonly preshared_key='${{ inputs.preshared_key }}'
-        readonly keepalive='${{ inputs.keepalive }}'
+        endpoint="$ARG_ENDPOINT"
+        endpoint_public_key="$ARG_ENDPOINT_PUBLIC_KEY"
+        ips="$ARG_IPS"
+        allowed_ips="$ARG_ALLOWED_IPS"
+        private_key="$ARG_PRIVATE_KEY"
+        preshared_key="$ARG_PRESHARED_KEY"
+        keepalive="$ARG_KEEPALIVE"
 
         readonly minport=51000
         readonly maxport=51999
