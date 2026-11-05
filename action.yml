@@ -116,12 +116,17 @@ runs:
             sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wireguard-tools
         }
 
-        readonly private_key_path=/tmp/private.key
-        readonly preshared_key_path=/tmp/preshared.key
+        # Must be in /etc/wireguard, because AppArmor people & their
+        # evangelists should off themselves:
+        #
+        #     https://www.mail-archive.com/ubuntu-bugs%40lists.ubuntu.com/msg6274314.html
+        #
+        readonly private_key_path=/etc/wireguard/private.key
+        readonly preshared_key_path=/etc/wireguard/preshared.key
 
         wg_tools_cleanup() {
-            rm -f -- "$private_key_path"
-            rm -f -- "$preshared_key_path"
+            sudo rm -f -- "$private_key_path"
+            sudo rm -f -- "$preshared_key_path"
         }
 
         via_wg_tools() {
@@ -131,9 +136,9 @@ runs:
             (
                 set -o errexit -o nounset -o pipefail
                 umask 0077
-                echo "$private_key" > "$private_key_path"
+                echo "$private_key" | sudo tee "$private_key_path" >/dev/null
                 if [ -n "$preshared_key" ]; then
-                    echo "$preshared_key" > "$preshared_key_path"
+                    echo "$preshared_key" | sudo tee "$preshared_key_path" >/dev/null
                 fi
             )
 
